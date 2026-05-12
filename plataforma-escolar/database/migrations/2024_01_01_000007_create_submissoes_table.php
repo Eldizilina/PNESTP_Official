@@ -1,0 +1,31 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('submissoes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('exercicio_id')->constrained('exercicios')->cascadeOnDelete();
+            $table->foreignId('aluno_id')->constrained('users')->cascadeOnDelete();
+            $table->enum('metodo', ['upload', 'plataforma'])->default('upload');
+            $table->string('ficheiro_path')->nullable();
+            $table->enum('status', ['pendente', 'corrigida', 'devolvida'])->default('pendente');
+            $table->decimal('nota', 8, 2)->nullable();
+            $table->text('feedback')->nullable();
+            $table->foreignId('corrigido_por')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('corrigido_em')->nullable();
+            $table->timestamp('submetido_em')->nullable();
+            $table->timestamps();
+
+            $table->unique(['exercicio_id', 'aluno_id']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('submissoes');
+    }
+};

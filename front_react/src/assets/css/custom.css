@@ -1,0 +1,31 @@
+/* Efeito de flutuação contínua */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Aplicar ao logo */
+.home-logo {
+  animation: float 6s ease-in-out infinite;
+}
+
+.home-page {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.home-page img {
+  transform-style: preserve-3d;
+}
+body {
+  background-color: white !important;
+}
+
+.hover-3d {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-3d:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
