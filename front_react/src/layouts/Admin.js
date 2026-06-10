@@ -8,7 +8,7 @@ import routes from "routes.js";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
-  const location    = useLocation();
+  const location = useLocation();
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -16,22 +16,22 @@ const Admin = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-const getRoutes = (routes) => {
-  console.log("=== ROTAS REGISTADAS ===");
-  return routes.map((prop, key) => {
-    if (prop.layout === "/admin") {
-      console.log(`Rota: ${prop.path} → ${prop.component?.name}`);
-      return (
-        <Route
-          path={prop.path}
-          element={<prop.component />}
-          key={key}
-        />
-      );
-    }
-    return null;
-  });
-};
+  const getRoutes = (routes) => {
+    console.log("=== ROTAS REGISTADAS ===");
+    return routes.map((prop, key) => {
+      if (prop.layout === "/admin") {
+        console.log(`Rota: ${prop.path} → ${prop.component?.name}`);
+        return (
+          <Route
+            path={prop.path}
+            element={<prop.component />}
+            key={key}
+          />
+        );
+      }
+      return null;
+    });
+  };
   const getBrandText = (path) => {
     for (let i = 0; i < routes.length; i++) {
       if (path.indexOf(routes[i].layout + routes[i].path) !== -1) {
@@ -56,6 +56,7 @@ const getRoutes = (routes) => {
         <AdminNavbar
           {...props}
           brandText={getBrandText(location.pathname)}
+          hideUserMenu={location.pathname === "/admin/profile"}
         />
         <Routes>
           {getRoutes(routes)}
@@ -65,6 +66,8 @@ const getRoutes = (routes) => {
           <AdminFooter />
         </Container>
       </div>
+
+
     </>
   );
 };

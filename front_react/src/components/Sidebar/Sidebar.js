@@ -15,8 +15,8 @@ const Sidebar = (props) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const toggleCollapse  = () => setCollapseOpen((v) => !v);
-  const closeCollapse   = () => setCollapseOpen(false);
+  const toggleCollapse = () => setCollapseOpen((v) => !v);
+  const closeCollapse = () => setCollapseOpen(false);
 
   // Rota activa
   const activeRoute = (routeName) =>
@@ -26,13 +26,10 @@ const Sidebar = (props) => {
   const createLinks = (routes) =>
     routes
       .filter((r) => r.layout === "/admin" && r.showInSidebar !== false)
+      .filter((r) => !r.perfis || r.perfis.includes(user?.perfil)) // 👈
       .map((prop, key) => (
         <NavItem key={key} className={activeRoute(prop.layout + prop.path)}>
-          <NavLink
-            to={prop.layout + prop.path}
-            tag={NavLinkRRD}
-            onClick={closeCollapse}
-          >
+          <NavLink to={prop.layout + prop.path} tag={NavLinkRRD} onClick={closeCollapse}>
             <i className={prop.icon} />
             {prop.name}
           </NavLink>
@@ -48,22 +45,22 @@ const Sidebar = (props) => {
     return (p[0][0] + p[p.length - 1][0]).toUpperCase();
   };
 
-  const nomeCompleto = user?.name  || "Utilizador";
+  const nomeCompleto = user?.name || "Utilizador";
   const primeiroNome = nomeCompleto.split(" ")[0];
 
   const avatarColor = () => {
     switch (user?.perfil) {
       case "professor_diretor": return "#f5365c";
-      case "professor":         return "#2dce89";
-      default:                  return "#5e72e4";
+      case "professor": return "#2dce89";
+      default: return "#5e72e4";
     }
   };
 
   const perfilLabel = () => {
     switch (user?.perfil) {
       case "professor_diretor": return "Professor Diretor";
-      case "professor":         return "Professor";
-      default:                  return "Aluno";
+      case "professor": return "Professor";
+      default: return "Aluno";
     }
   };
 
@@ -249,10 +246,10 @@ Sidebar.defaultProps = {
 Sidebar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object),
   logo: PropTypes.shape({
-    innerLink:  PropTypes.string,
+    innerLink: PropTypes.string,
     outterLink: PropTypes.string,
-    imgSrc:     PropTypes.string.isRequired,
-    imgAlt:     PropTypes.string.isRequired,
+    imgSrc: PropTypes.string.isRequired,
+    imgAlt: PropTypes.string.isRequired,
   }),
 };
 

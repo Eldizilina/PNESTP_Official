@@ -29,6 +29,7 @@ const routes = [
     component:     PainelProfessor,
     layout:        "/admin",
     showInSidebar: true,
+    perfis:        ["professor", "professor_diretor"],
   },
   {
     path:          "/aluno",
@@ -37,6 +38,7 @@ const routes = [
     component:     PainelAluno,
     layout:        "/admin",
     showInSidebar: true,
+    perfis:        ["aluno"],
   },
   {
     path:          "/sala/:id",
@@ -48,7 +50,7 @@ const routes = [
   },
   {
     path:          "/profile",
-    name:          "Meu Perfil",
+    name:          "",
     icon:          "ni ni-circle-08 text-pink",
     component:     Profile,
     layout:        "/admin",
